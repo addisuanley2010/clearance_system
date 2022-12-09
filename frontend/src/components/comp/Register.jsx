@@ -4,6 +4,8 @@ import HttpsIcon from "@mui/icons-material/Https";
 import EmailIcon from "@mui/icons-material/Email";
 import SchoolIcon from "@mui/icons-material/School";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import CallIcon from "@mui/icons-material/Call";
+import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
 // import {  useContext } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -19,22 +21,32 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+const phoneRegExp =
+  /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
 const Register = () => {
   const validationSchema = yup.object({
     username: yup.string().required().min(3).max(10),
     email: yup.string().required().email(),
-    department: yup.string().required().min(3).max(10),
+    phone: yup
+      .string()
+      .matches(phoneRegExp, "Phone number is not valid")
+      .required(),
+    designation: yup.string().required().min(3).max(10),
+    campus: yup.string().required().min(3).max(10),
     password: yup.string().required().min(4).max(10),
-    confirmPassword: yup.string().required().min(4).max(10),
+    confirmPassword: yup
+      .string()
+      .oneOf([yup.ref("password"), null], "Passwords must match"),
   });
- 
 
   const formik = useFormik({
     initialValues: {
       username: "",
       email: "",
-      department: "",
+      phone: "",
+      designation: "",
+      campus: "",
       password: "",
       confirmPassword: "",
     },
@@ -47,26 +59,25 @@ const Register = () => {
   // const Aschale = useContext(Addisu);
   const navigate = useNavigate();
 
-  
-
   const handleSubmit = (values) => {
-  
+    navigate("/login");
+
     axios.post("http://localhost:3002/register", values).then((res) => {
       if (res.data.error) {
         // Aschale.setDialogValue({ description: res.data.error, open: true });
+        console.log(res)
       } else {
         // Aschale.setDialogValue({ description: res.data.success, open: true });
+        console.log(res)
         navigate("/login");
       }
     });
-  
   };
 
   return (
     <Stack alignItems={"center"}>
       <form onSubmit={formik.handleSubmit}>
         <Stack
-          marginTop={"10px"}
           sx={{
             minWidth: {
               xs: "350px",
@@ -119,16 +130,46 @@ const Register = () => {
             }}
           />
           <TextField
-            name="department"
-            value={formik.values.department}
+            name="phone"
+            value={formik.values.phone}
             onChange={formik.handleChange}
-            error={Boolean(formik.errors.department)}
-            helperText={formik.errors.department}
-            placeholder="department"
+            error={Boolean(formik.errors.phone)}
+            helperText={formik.errors.phone}
+            placeholder="phone"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <CallIcon />
+                </InputAdornment>
+              ),
+            }}
+          />
+          <TextField
+            name="designation"
+            value={formik.values.designation}
+            onChange={formik.handleChange}
+            error={Boolean(formik.errors.designation)}
+            helperText={formik.errors.designation}
+            placeholder="designation"
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
                   <SchoolIcon />
+                </InputAdornment>
+              ),
+            }}
+          />
+          <TextField
+            name="campus"
+            value={formik.values.campus}
+            onChange={formik.handleChange}
+            error={Boolean(formik.errors.campus)}
+            helperText={formik.errors.campus}
+            placeholder="campus"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <AddLocationAltIcon />
                 </InputAdornment>
               ),
             }}
@@ -171,7 +212,8 @@ const Register = () => {
           variant="outlined"
           type="submit"
           sx={{
-            marginTop: "60px",
+            marginTop: "50px",
+            marginBottom: "50px",
             paddingY: "8px",
             "&:hover": {
               backgroundColor: "primary.light",

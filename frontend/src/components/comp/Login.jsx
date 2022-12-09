@@ -5,19 +5,22 @@ import { Link } from "react-router-dom";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import HttpsIcon from "@mui/icons-material/Https";
 import axios from "axios";
-import { useState} from "react";
-// import {  useContext } from "react";
-
-// import { Addisu } from "../App";
+import { useState } from "react";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import { useContext } from "react";
+import { parentContext } from "../../state/ContextState";
 
 const Login = () => {
+  const [passwordShown, setPasswordShown] = useState(false);
+
   const [loginValue, setLoginValue] = useState({
     username: "",
     password: "",
   });
 
   const navigate = useNavigate();
-//   const Aschale = useContext(Addisu);
+  const loginContext = useContext(parentContext);
 
   const register = () => {
     navigate("/register");
@@ -35,16 +38,32 @@ const Login = () => {
   const handleSubmit = () => {
     axios.post("http://localhost:3002/login", loginValue).then((res) => {
       if (res.data.error) {
-        // Aschale.setDialogValue({ description: res.data.error, open: true });
+        loginContext.setDialogValue({ description:res.data.error, open: true });
       } else {
         sessionStorage.setItem("accessToken", res.data.accessToken);
         navigate("/");
-        // Aschale.setDisplay(!Aschale.display)
-        // Aschale.setDialogValue({ description: res.data.success, open: true });
+        loginContext.setDialogValue({ description: res.data.success, open: true });
+       
+        loginContext.setLoginValue(true);
+        if (res.data.roll === "admin") {
+          loginContext.setSideNavValue(1);
+          console.log(res.data.roll);
+        } else if (res.data.roll === "staff") {
+          loginContext.setSideNavValue(2);
+          console.log(res.data.roll);
+        } else {
+          loginContext.setSideNavValue(0);
+          console.log(res.data.roll);
+        }
+
+        console.log(res.data);
       }
     });
   };
 
+  const togglePassword = () => {
+    setPasswordShown(!passwordShown);
+  };
   return (
     <Stack alignItems={"center"}>
       <Stack
@@ -83,13 +102,24 @@ const Login = () => {
         <TextField
           placeholder="password"
           name="password"
-          type={"password"}
+          type={passwordShown ? "text" : "password"}
           value={loginValue.password}
           onChange={handleChange}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
                 <HttpsIcon />
+              </InputAdornment>
+            ),
+            endAdornment: (
+              <InputAdornment position="end">
+                <Button onClick={togglePassword}>
+                  {!passwordShown ? (
+                    <VisibilityOffIcon />
+                  ) : (
+                    <RemoveRedEyeIcon />
+                  )}
+                </Button>
               </InputAdornment>
             ),
           }}
