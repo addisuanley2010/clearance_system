@@ -6,17 +6,16 @@ import { useContext } from "react";
 import { parentContext } from "../../state/ContextState";
 
 export const background = {
-    backgroundColor: grey[300],
-  };
+  backgroundColor: grey[300],
+};
 const SideNav = () => {
   const sideNavContext = useContext(parentContext);
 
   const defaultNavItem = ["Contact", "help", "about"];
-  const staffNavItem = [" clearance", "officer"];
+  const staffNavItem = ["clearance", "officer"];
   const adminNavItem = ["Requests", "Assign head", "Add Dept", "Register"];
 
   const navigate = useNavigate();
- 
 
   return (
     <Box
@@ -62,10 +61,16 @@ const SideNav = () => {
           ) : sideNavContext.sideNavValue === 2 ||
             sideNavContext.sideNavValue === 4 ? (
             <>
-              {sideNavContext.sideNavValue === 4 && <Button sx={background} 
-              onClick={()=>{
-                 navigate("/staff");
-              }}>staff req</Button>}
+              {sideNavContext.sideNavValue === 4 && (
+                <Button
+                  sx={background}
+                  onClick={() => {
+                    navigate("/staff");
+                  }}
+                >
+                  staff req
+                </Button>
+              )}
 
               {staffNavItem.map((item) => (
                 <Button

@@ -14,6 +14,9 @@ import Login from "../comp/Login";
 import { parentContext } from "../../state/ContextState";
 import { useContext } from "react";
 import StaffRequest from "../staffComp/StaffRequest";
+import Officer from "../staffComp/Officer";
+import Clearance from "../staffComp/Clearance";
+
 const Feed = () => {
   const feedContext = useContext(parentContext);
 
@@ -41,14 +44,22 @@ const Feed = () => {
               <Route path="/Add Dept" exact element={<AddDepartment />}></Route>
             </>
           )}
-
+          {(feedContext.sideNavValue === 2 ||
+            feedContext.sideNavValue === 4) && (
+            <>
+              {feedContext.sideNavValue === 4 && (
+                <Route path="/staff" element={<StaffRequest />}></Route>
+              )}
+              <Route path="/officer" exact element={<Officer />}></Route>
+              <Route path="/clearance" exact element={<Clearance />}></Route>
+            </>
+          )}
           <Route path="/login" exact element={<Login />}></Route>
           <Route path="/" exact element={<Home />}></Route>
           <Route path="/about" exact element={<About />}></Route>
           <Route path="/help" exact element={<Help />}></Route>
           <Route path="/contact" exact element={<Contact />}></Route>
-          <Route path="/" element={<PageNotFound />}></Route>
-          <Route path="/staff" element={<StaffRequest />}></Route>
+          <Route path="/*" element={<PageNotFound />}></Route>
         </Routes>
       </Paper>
     </Box>

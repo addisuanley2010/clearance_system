@@ -8,8 +8,8 @@ import axios from "axios";
 import { useState } from "react";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-// import { useContext } from "react";
-// import { parentContext } from "../../state/ContextState";
+import { useContext } from "react";
+import { parentContext } from "../../state/ContextState";
 
 const Login = () => {
   const [passwordShown, setPasswordShown] = useState(false);
@@ -20,7 +20,7 @@ const Login = () => {
   });
 
   const navigate = useNavigate();
-  // const loginContext = useContext(parentContext);
+  const loginContext = useContext(parentContext);
 
   const register = () => {
     navigate("/register");
@@ -38,11 +38,11 @@ const Login = () => {
   const handleSubmit = () => {
     axios.post("http://localhost:3002/login", loginValue).then((res) => {
       if (res.data.error) {
-        // loginContext.setDialogValue({ description:res.data.error, open: true });
+        loginContext.setDialogValue({ description:res.data.error, open: true });
       } else {
         sessionStorage.setItem("accessToken", res.data.accessToken);
         navigate("/");
-        // loginContext.setDialogValue({ description: res.data.success, open: true });
+        loginContext.setDialogValue({ description: res.data.success, open: true });
         console.log(res.data)
       
 

@@ -9,7 +9,6 @@ import { Avatar } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { parentContext } from "../../state/ContextState";
-
 const Header = () => {
   const navigate = useNavigate();
 
@@ -21,12 +20,11 @@ const Header = () => {
   const logout = () => {
     headerContext.setLoginValue(false);
     headerContext.setSideNavValue(0);
-    sessionStorage.removeItem("accessToken")
-    navigate("/login")
-
+    sessionStorage.removeItem("accessToken");
+    navigate("/login");
   };
-  const isAccessToken=Boolean(sessionStorage.getItem("accessToken"))
-  console.log(isAccessToken)
+  const isAccessToken = Boolean(sessionStorage.getItem("accessToken"));
+  console.log(isAccessToken);
   return (
     <Box>
       <AppBar position="sticky">
