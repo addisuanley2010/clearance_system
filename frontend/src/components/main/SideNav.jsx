@@ -5,20 +5,19 @@ import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { parentContext } from "../../state/ContextState";
 
-
-
+export const background = {
+    backgroundColor: grey[300],
+  };
 const SideNav = () => {
-  const sideNavContext=useContext(parentContext)
+  const sideNavContext = useContext(parentContext);
 
   const defaultNavItem = ["Contact", "help", "about"];
   const staffNavItem = [" clearance", "officer"];
-  const adminNavItem = [" Requests", "Assign head", "Add Dept", "Register"];
+  const adminNavItem = ["Requests", "Assign head", "Add Dept", "Register"];
 
   const navigate = useNavigate();
-  const background = {
-    backgroundColor: grey[300],
-  };
-     
+ 
+
   return (
     <Box
       flex={1}
@@ -45,7 +44,7 @@ const SideNav = () => {
           <Button onClick={() => navigate("/")} sx={background}>
             Home
           </Button>
-          {(sideNavContext.sideNavValue===1) ? (
+          {sideNavContext.sideNavValue === 1 ? (
             <>
               {adminNavItem.map((item) => (
                 <Button
@@ -60,10 +59,14 @@ const SideNav = () => {
                 </Button>
               ))}
             </>
-          ) : (
-            (sideNavContext.sideNavValue===2) ?(
+          ) : sideNavContext.sideNavValue === 2 ||
+            sideNavContext.sideNavValue === 4 ? (
             <>
-              <Button sx={background}>Staff Req</Button>
+              {sideNavContext.sideNavValue === 4 && <Button sx={background} 
+              onClick={()=>{
+                 navigate("/staff");
+              }}>staff req</Button>}
+
               {staffNavItem.map((item) => (
                 <Button
                   key={item}
@@ -76,7 +79,9 @@ const SideNav = () => {
                   {item}
                 </Button>
               ))}
-            </>):""
+            </>
+          ) : (
+            ""
           )}
           {defaultNavItem.map((item) => (
             <Button

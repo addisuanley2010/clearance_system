@@ -20,8 +20,9 @@ const Header = () => {
   };
   const logout = () => {
     headerContext.setLoginValue(false);
-    headerContext.setSideNavValue(false);
+    headerContext.setSideNavValue(0);
     sessionStorage.removeItem("accessToken")
+    navigate("/login")
 
   };
   const isAccessToken=Boolean(sessionStorage.getItem("accessToken"))

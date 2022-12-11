@@ -27,6 +27,10 @@ function App() {
         setSideNavValue(2);
 
       }
+      else if (res.data.designation === 'head') {
+        setSideNavValue(4);
+
+      }
       else {
         setSideNavValue(0);
       }

@@ -44,7 +44,6 @@ router.post('/', async (req, res) => {
                     }, "importantsecret");
 
                     res.json({ accessToken: accessToken, 
-                    roll:result[0].designation ,
                      success:"successfully logged in"})
                 }
             })
