@@ -8,7 +8,14 @@ import Register from "../comp/Register";
 import PageNotFound from "./PageNotFound";
 import { Route, Routes } from "react-router-dom";
 import Login from "../comp/Login";
-const Feed = ({ setValue, value }) => {
+import { parentContext } from "../../state/ContextState";
+import { useContext } from "react";
+const Feed = () => {
+
+const feedContext=useContext(parentContext)
+
+
+
   return (
     <Box
       flex={6}
@@ -20,24 +27,20 @@ const Feed = ({ setValue, value }) => {
           width: "69rem",
           minHeight: "37rem",
         },
-      }}
+      } }
     >
       <Paper elevation={10}>
         <Routes>
           <Route path="/home" exact element={<Home />}></Route>
-          {value && (
+          {feedContext.sideNavValue===1 && (
             <Route path="/register" exact element={<Register />}></Route>
           )}
-          <Route
-            path="/login"
-            exact
-            element={<Login setValue={setValue} />}
+          <Route  path="/login" exact element={<Login />}
           ></Route>
           <Route path="/" exact element={<Home />}></Route>
            <Route path="/about" exact element={<About />}></Route>
           <Route path="/help" exact element={<Help />}></Route>
           <Route path="/contact" exact element={<Contact />}></Route>
-
           <Route path="/*" element={<PageNotFound />}></Route>
         </Routes>
       </Paper>

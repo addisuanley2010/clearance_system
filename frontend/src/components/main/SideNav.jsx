@@ -18,7 +18,7 @@ const SideNav = () => {
   const background = {
     backgroundColor: grey[300],
   };
-
+     
   return (
     <Box
       flex={1}

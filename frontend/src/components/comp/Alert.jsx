@@ -17,7 +17,7 @@ const Alert = () => {
     const alertContext=useContext(parentContext)
   return (
     <Stack >
-      <Dialog open={alertContext.dialogValue.open} onClose={handleClose}  sx={{
+      <Dialog open={alertContext.dialogValue.open||false} onClose={handleClose}  sx={{
         "& .MuiPaper-root": {
           width: "100%",
           maxWidth: "500px",  // Set your width here

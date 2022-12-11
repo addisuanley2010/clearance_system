@@ -44,19 +44,18 @@ const Login = () => {
         navigate("/");
         loginContext.setDialogValue({ description: res.data.success, open: true });
        
-        loginContext.setLoginValue(true);
-        if (res.data.roll === "admin") {
-          loginContext.setSideNavValue(1);
-          console.log(res.data.roll);
-        } else if (res.data.roll === "staff") {
-          loginContext.setSideNavValue(2);
-          console.log(res.data.roll);
-        } else {
-          loginContext.setSideNavValue(0);
-          console.log(res.data.roll);
-        }
+        // // loginContext.setLoginValue(true);
+        // if (res.data.roll === "admin") {
+        //   loginContext.setSideNavValue(1);
+        //   // console.log(res.data.roll);
+        // } else if (res.data.roll === "staff") {
+        //   loginContext.setSideNavValue(2);
+        //   // console.log(res.data.roll);
+        // } else {
+        //   loginContext.setSideNavValue(0);
+        //   // console.log(res.data.roll);
+        // }
 
-        console.log(res.data);
       }
     });
   };

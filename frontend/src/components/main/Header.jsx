@@ -24,6 +24,8 @@ const Header = () => {
     sessionStorage.removeItem("accessToken")
 
   };
+  const isAccessToken=Boolean(sessionStorage.getItem("accessToken"))
+  console.log(isAccessToken)
   return (
     <Box>
       <AppBar position="sticky">
@@ -46,7 +48,7 @@ const Header = () => {
               Online Employee Clearance System
             </Typography>
           </Typography>
-          {!headerContext.loginValue ? (
+          {!isAccessToken ? (
             <Button color="inherit" variant="text" onClick={handleClik}>
               Login
             </Button>

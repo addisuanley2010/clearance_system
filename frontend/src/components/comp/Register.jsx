@@ -6,10 +6,10 @@ import SchoolIcon from "@mui/icons-material/School";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import CallIcon from "@mui/icons-material/Call";
 import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
-// import {  useContext } from "react";
+ import {  useContext } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-// import { Addisu } from "../App";
+import { parentContext } from "../../state/ContextState";
 
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -56,7 +56,7 @@ const Register = () => {
     validationSchema: validationSchema,
   });
 
-  // const Aschale = useContext(Addisu);
+   const registerContext = useContext(parentContext);
   const navigate = useNavigate();
 
   const handleSubmit = (values) => {
@@ -64,15 +64,16 @@ const Register = () => {
 
     axios.post("http://localhost:3002/register", values).then((res) => {
       if (res.data.error) {
-        // Aschale.setDialogValue({ description: res.data.error, open: true });
+        registerContext.setDialogValue({ description: res.data.error, open: true });
         console.log(res)
       } else {
-        // Aschale.setDialogValue({ description: res.data.success, open: true });
+        registerContext.setDialogValue({ description: res.data.success, open: true });
         console.log(res)
         navigate("/login");
       }
     });
   };
+  
 
   return (
     <Stack alignItems={"center"}>
