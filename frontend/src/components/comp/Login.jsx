@@ -43,7 +43,6 @@ const Login = () => {
         sessionStorage.setItem("accessToken", res.data.accessToken);
         navigate("/");
         loginContext.setDialogValue({ description: res.data.success, open: true });
-        console.log(res.data)
       
 
       }

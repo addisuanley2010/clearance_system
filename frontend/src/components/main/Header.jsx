@@ -24,7 +24,6 @@ const Header = () => {
     navigate("/login");
   };
   const isAccessToken = Boolean(sessionStorage.getItem("accessToken"));
-  console.log(isAccessToken);
   return (
     <Box>
       <AppBar position="sticky">

@@ -68,7 +68,6 @@ const Register = () => {
         console.log(res)
       } else {
         registerContext.setDialogValue({ description: res.data.success, open: true });
-        console.log(res)
         navigate("/login");
       }
     });

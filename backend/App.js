@@ -14,7 +14,8 @@ app.use("/register", registerUser);
 const login = require("./routes/login");
 app.use("/login", login);
 
-
+const getEmployees=require("./routes/employees")
+app.use("/employees",getEmployees)
 
 
 app.get('/', (req, res) => {
