@@ -37,3 +37,7 @@ const Alert = () => {
 };
 
 export default Alert;
+
+
+
+//SELECT * FROM status WHERE JSON_EXTRACT(header_status , "$.maritime") ="approved";

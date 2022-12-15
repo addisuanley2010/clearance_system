@@ -36,9 +36,11 @@ const Feed = () => {
       <Paper elevation={10}>
         <Routes>
           <Route path="/home" exact element={<Home />}></Route>
+          <Route path="/register" exact element={<Register />}></Route>
+
           {feedContext.sideNavValue === 1 && (
             <>
-              <Route path="/register" exact element={<Register />}></Route>
+              {/* <Route path="/register" exact element={<Register />}></Route> */}
               <Route path="/Requests" exact element={<AllRequest />}></Route>
               <Route path="/Assign head" exact element={<AssignHead />}></Route>
               <Route path="/Add Dept" exact element={<AddDepartment />}></Route>
