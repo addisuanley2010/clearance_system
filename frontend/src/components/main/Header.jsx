@@ -51,9 +51,14 @@ const Header = () => {
               Login
             </Button>
           ) : (
-            <Button color="inherit" variant="text" onClick={logout}>
-              logout
-            </Button>
+            <>
+              <Button color="inherit" variant="text" onClick={logout}>
+                logout
+              </Button>
+              <Button color="inherit" variant="text">{headerContext.name}</Button>
+              <Button color="inherit" variant="text">{headerContext.roll}</Button>
+
+            </>
           )}
         </Toolbar>
       </AppBar>

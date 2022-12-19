@@ -9,11 +9,10 @@ const db = require('../model/connect')
 
 router.post('/', (req, res) => {
 
-    const { username, email, password, phone,designation,campus } = req.body
-   
-    const checkUser = "SELECT `username` FROM `newEmployee` WHERE `username` =?";
-    const sqlInsert = "INSERT INTO `newEmployee` (`username`, `email`, `phone`, `designation`,`campus`,`password`) VALUES (?,?,?,?,?,?)"
-
+    const { username, email, password, phone,fname,lname,campus ,mname} = req.body
+  
+    const checkUser = "SELECT `empid` FROM `employee` WHERE `empid` =?";
+    const sqlInsert = "INSERT INTO `employee`(`empid`, `fname`, `mname`, `lname`, `email`, `password`, `phone`,  `campus`) VALUES (?,?,?,?,?,?,?,?)"
 
     db.query(checkUser, [username], (err, result) => {
         if (err) {
@@ -23,9 +22,9 @@ router.post('/', (req, res) => {
             res.send({ error: 'username already existed!' })
         }
         else {
-       
+    
                 bcrypt.hash(password, 10).then((hashedPassword) => {
-                    db.query(sqlInsert, [username, email, phone, designation,campus,hashedPassword], (err, result) => {
+                    db.query(sqlInsert, [username,fname,mname,lname,email,hashedPassword,phone ,campus], (err, result) => {
                         if (err)
                             res.send({ error: 'register failed!' })
                         else

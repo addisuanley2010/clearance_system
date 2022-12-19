@@ -16,6 +16,7 @@ import { useContext } from "react";
 import StaffRequest from "../staffComp/StaffRequest";
 import Officer from "../staffComp/Officer";
 import Clearance from "../staffComp/Clearance";
+import AllReq from "../../officer/AllReq";
 
 const Feed = () => {
   const feedContext = useContext(parentContext);
@@ -36,21 +37,23 @@ const Feed = () => {
       <Paper elevation={10}>
         <Routes>
           <Route path="/home" exact element={<Home />}></Route>
-          <Route path="/register" exact element={<Register />}></Route>
-
           {feedContext.sideNavValue === 1 && (
             <>
-              {/* <Route path="/register" exact element={<Register />}></Route> */}
+              <Route path="/register" exact element={<Register />}></Route>
               <Route path="/Requests" exact element={<AllRequest />}></Route>
               <Route path="/Assign head" exact element={<AssignHead />}></Route>
               <Route path="/Add Dept" exact element={<AddDepartment />}></Route>
             </>
           )}
           {(feedContext.sideNavValue === 2 ||
+            feedContext.sideNavValue === 3 ||
             feedContext.sideNavValue === 4) && (
             <>
-              {feedContext.sideNavValue === 4 && (
+              {(feedContext.sideNavValue === 4 || feedContext.sideNavValue === 3)&& (
                 <Route path="/staff" element={<StaffRequest />}></Route>
+              )}
+              {feedContext.sideNavValue === 3 && (
+                <Route path="/allreq" element={<AllReq />}></Route>
               )}
               <Route path="/officer" exact element={<Officer />}></Route>
               <Route path="/clearance" exact element={<Clearance />}></Route>

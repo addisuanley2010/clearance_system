@@ -1,16 +1,17 @@
-const mysql = require('mysql')
+const mysql = require('mysql2')
 const con = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: '',
-    database: 'clearance'
-})
+    password: '', 
+    port:'3360',
+    database: 'clearance_system'
+}) 
 con.connect((err) => {
     if (err)
-        console.log('not connected')
+        console.log(err)
     else
         console.log("Connected!");
 });
 
-//but , this is mandatory
+//but , this is mandatory 
 module.exports = con;

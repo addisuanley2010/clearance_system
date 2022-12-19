@@ -9,13 +9,16 @@ import { Paper, Button } from "@mui/material/";
 import { grey } from "@mui/material/colors";
 import { useState, useEffect } from "react";
 import axios from "axios";
-
+import { useContext } from "react";
+import { parentContext } from "../../state/ContextState";
 const StaffRequest = () => {
   const [users, setUsers] = useState([]);
-
+  // axios.get(`http://localhost:3002/require/request/${deptid}`
+  const StaffRequestContext = useContext(parentContext);
+  const deptid=StaffRequestContext.deptid;
   useEffect(() => {
     axios
-      .get("http://localhost:3002/employees",{
+      .get(`http://localhost:3002/employees/user/${deptid}`,{
       headers: {
         accessToken: sessionStorage.getItem("accessToken"),
       }
@@ -25,7 +28,7 @@ const StaffRequest = () => {
       .catch(function (error) {
         console.log(error);
       });
-  }, []);
+  }, [deptid]);
 
   const background = {
     backgroundColor: grey[400],
@@ -33,7 +36,7 @@ const StaffRequest = () => {
   return (
     <TableContainer
       component={Paper}
-      sx={{ maxHeight: "55%", minHeight: "50%", marginBottom: "0px" }}
+      sx={{ maxHeight: "65%", minHeight: "60%", marginBottom: "0px" }}
     >
       <Table
         stickyHeader
@@ -49,31 +52,31 @@ const StaffRequest = () => {
         <TableHead>
           <TableRow sx={background} >
             <TableCell>No</TableCell>
-            <TableCell align="right">usename</TableCell>
+            <TableCell align="center">name</TableCell>
             <TableCell align="center">email</TableCell>
-            <TableCell align="right">phone</TableCell>
-            <TableCell align="right">designation</TableCell>
-            <TableCell align="right">campus</TableCell>
-            <TableCell align="right">status</TableCell>
+            <TableCell align="center">phone</TableCell>
+            <TableCell align="center">designation</TableCell>
+            <TableCell align="center">campus</TableCell>
+            <TableCell align="center">status</TableCell>
             <TableCell align="center">action</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {users.map((user, id) => (
             <TableRow
-              key={user.empId}
+              key={user.empid}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell component="th" scope="row">
                 {id + 1}
               </TableCell>
-              <TableCell align="right">{user.username}</TableCell>
-              <TableCell align="right">{user.email}</TableCell>
-              <TableCell align="right">{user.phone}</TableCell>
-              <TableCell align="right">{user.designation}</TableCell>
-              <TableCell align="right">{user.campus}</TableCell>
-              <TableCell align="right">pending</TableCell>
-              <TableCell align="right">
+              <TableCell align="center">{user.empid} </TableCell>
+              <TableCell align="center">{user.email}</TableCell>
+              <TableCell align="center">{user.phone}</TableCell>
+              <TableCell align="center">{user.designation}</TableCell>
+              <TableCell align="center">{user.campus}</TableCell>
+              <TableCell align="center">pending</TableCell>
+              <TableCell align="center">
                 <Button sx={{ background: grey[100] }}>change status</Button>
               </TableCell>
             </TableRow>

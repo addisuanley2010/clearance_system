@@ -59,9 +59,10 @@ const SideNav = () => {
               ))}
             </>
           ) : sideNavContext.sideNavValue === 2 ||
-            sideNavContext.sideNavValue === 4 ? (
+            sideNavContext.sideNavValue === 4 ||
+            sideNavContext.sideNavValue === 3 ? (
             <>
-              {sideNavContext.sideNavValue === 4 && (
+              {(sideNavContext.sideNavValue === 4||sideNavContext.sideNavValue === 3 )&& (
                 <Button
                   sx={background}
                   onClick={() => {
@@ -69,6 +70,16 @@ const SideNav = () => {
                   }}
                 >
                   staff req
+                </Button>
+              )}
+              {sideNavContext.sideNavValue === 3 && (
+                <Button
+                  sx={background}
+                  onClick={() => {
+                    navigate("/allreq");
+                  }}
+                >
+                  All req
                 </Button>
               )}
 
