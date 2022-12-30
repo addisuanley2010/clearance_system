@@ -9,6 +9,7 @@ import Alert from './components/comp/Alert';
 import axios from 'axios';
 function App() {
   const [deptid, setDeptid] = useState("")
+  const [present, setpresent] = useState(false)
   const [name,setName]=useState("");//temp value
   const [roll,setRoll]=useState("");//temp value
   const [loginValue, setLoginValue] = useState(false)
@@ -23,6 +24,7 @@ function App() {
         accessToken: sessionStorage.getItem("accessToken"),
       }
     }).then(res => {
+      console.log(res.data);
       if (res.data.designation === 'admin') {
         setSideNavValue(1);
       }
@@ -44,12 +46,14 @@ function App() {
       setName(res.data.username);
       setRoll(res.data.designation);
       setDeptid(res.data.deptid)
+      setpresent(res.data.present)
 
     })
   })
   return (
     <Stack>
       <parentContext.Provider value={{
+        present:present,
         name:name,
         roll:roll,
         deptid:deptid,

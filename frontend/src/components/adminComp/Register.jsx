@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
 import HttpsIcon from "@mui/icons-material/Https";
 import EmailIcon from "@mui/icons-material/Email";
@@ -20,11 +20,14 @@ import {
   Stack,
   Typography,
   Box,
+  Select,
+  MenuItem,
 } from "@mui/material";
 const phoneRegExp =
   /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
 const Register = () => {
+  const [value, setValue] = useState("")
   const validationSchema = yup.object({
     username: yup.string().required().min(3).max(15),
     fname: yup.string().required().min(3).max(20),
@@ -83,6 +86,25 @@ const Register = () => {
     });
     console.log(values);
   };
+
+  const departments=[
+    {id:1,name:"software"},
+    {id:2,name:"chemical"},
+    {id:3,name:"mechanical"},
+    {id:4,name:"industrial"},
+    {id:5,name:"automotive"},
+    {id:6,name:"civil"},
+    {id:7,name:"electrical"},
+    {id:8,name:"computer"}
+
+  ]
+  const option=departments.map(data=>{
+    return(
+      <MenuItem value={data.name} key={data.id}>
+            {data.name}
+      </MenuItem>
+    )
+  })
 
   return (
     <Stack alignItems={"center"}>
@@ -203,22 +225,11 @@ const Register = () => {
                   ),
                 }}
               />
-              <TextField
-                placeholder="department"
-                disabled
-                value={"software Eng"}
-                // onChange={formik.handleChange}
-                // error={Boolean(formik.errors.department)}
-                // helperText={formik.errors.department}
-                // name="department"
-                // InputProps={{
-                //   startAdornment: (
-                //     <InputAdornment position="start">
-                //       <HttpsIcon />
-                //     </InputAdornment>
-                //   ),
-                // }}
-              />
+           
+
+              <Select value={value} onChange={(e)=>{setValue(e.target.value)}}>
+                {option}
+              </Select>
               <TextField
                 name="campus"
                 value={formik.values.campus}
@@ -269,28 +280,26 @@ const Register = () => {
             </Stack>
           </Box>
         </Stack>
-      <Stack alignItems={"center"}>
-           <Button
-          variant="outlined"
-          type="submit"
-          sx={{
-            marginTop: "50px",
-            marginBottom: "50px",
-            paddingY: "8px",
-            "&:hover": {
-              backgroundColor: "primary.light",
-            },
-            minWidth: {
-              xs: "200px",
-              sm: "300px",
-            },
-          }}
-        >
-          Register
-        </Button>
-      </Stack>
-
-        
+        <Stack alignItems={"center"}>
+          <Button
+            variant="outlined"
+            type="submit"
+            sx={{
+              marginTop: "50px",
+              marginBottom: "50px",
+              paddingY: "8px",
+              "&:hover": {
+                backgroundColor: "primary.light",
+              },
+              minWidth: {
+                xs: "200px",
+                sm: "300px",
+              },
+            }}
+          >
+            Register
+          </Button>
+        </Stack>
       </form>
     </Stack>
   );
