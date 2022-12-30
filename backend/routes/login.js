@@ -6,13 +6,33 @@ const { sign } = require("jsonwebtoken");
 const { validateToken } = require("../middleware/AuthMiddleware");
 
 
+
 router.get('/', validateToken, (req, res) => {
-    res.json(req.user)
+    const check = "SELECT * FROM `requests` WHERE `empid` =?";
+
+    db.query(check, [req.user.username], (err, result) => {
+        if (err) {
+            res.send(err)
+        }
+        else if (result.length > 0) {
+            req.user.present = true
+            res.json(req.user)
+        }
+        else {
+            req.user.present = false
+            res.send(req.user)
+
+        }
+
+
+    })
+
+
 })
 
-router.post('/', async (req, res) => {
+router.post('/',  (req, res) => {
     const { username, password } = req.body
-    const data = await ("SELECT * FROM `employee` WHERE `empid`=?")
+    const data =  ("SELECT * FROM `employee` WHERE `empid`=?")
     db.query(data, [username], (err, result) => {
         if (err) {
             res.send({ error: "Failed!" })
@@ -36,15 +56,17 @@ router.post('/', async (req, res) => {
                         email: result[0].email,
                         phone: result[0].phone,
                         designation: result[0].designation,
-                        campus:result[0].campus,
-                        fname:result[0].fname,
-                        lname:result[0].lname,
-                        mname:result[0].mname,
-                        deptid:result[0].deptid,
+                        campus: result[0].campus,
+                        fname: result[0].fname,
+                        lname: result[0].lname,
+                        mname: result[0].mname,
+                        deptid: result[0].deptid,
                     }, "importantsecret");
 
-                    res.json({ accessToken: accessToken, 
-                    success:"successfully logged in"})
+                    res.json({
+                        accessToken: accessToken,
+                        success: "successfully logged in"
+                    })
                 }
             })
 

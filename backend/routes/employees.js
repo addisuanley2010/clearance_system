@@ -15,7 +15,13 @@ router.get('/', validateToken,(req, res) => {
         }
     })
 })
-const staffReq="SELECT * from `employee` WHERE `deptid`=?";
+
+// this is to get staff req
+
+const staffReq="SELECT e.* FROM employee e INNER JOIN requests r ON e.empid = r.empid WHERE e.deptid=?";
+;
+
+
 
 router.get("/user/:deptid", validateToken,(req, res) => {
     const deptid = req.params.deptid; 
@@ -30,5 +36,24 @@ router.get("/user/:deptid", validateToken,(req, res) => {
 
 
 })
+
+// const update="UPDATE `status` SET `header_status`=? WHERE empid=?"
+const update="UPDATE `status` SET `header_status`=? WHERE empid=?"
+
+router.put("/status",validateToken,(req,res)=>{
+    const {newStatus,empid}=req.body
+console.log(newStatus,empid)
+    db.query(update,[newStatus,empid],(err,result)=>{
+        if(err){
+            console.log(err)
+        }
+        else{
+            res.send({success:"updated successfully"})
+        }
+    })
+})
+
+
+
 
 module.exports = router;

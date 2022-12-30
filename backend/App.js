@@ -11,12 +11,17 @@ app.use(cors())
 const registerUser = require("./routes/registerUser");
 app.use("/register", registerUser);
 
+
+
 const login = require("./routes/login");
 app.use("/login", login);
 
 const getEmployees=require("./routes/employees")
 app.use("/employees",getEmployees)
 
+
+const clearanceReq = require("./routes/clearanceReq");
+app.use("/clearanceReq", clearanceReq);
 
 app.get('/', (req, res) => {
     res.send('hello ethiopian')
