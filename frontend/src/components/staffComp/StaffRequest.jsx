@@ -16,9 +16,9 @@ import axios from "axios";
 import { useContext } from "react";
 import { parentContext } from "../../state/ContextState";
 const StaffRequest = () => {
-  const [tempId, setTempId] = useState("")
+  const [tempId, setTempId] = useState("");
   const [open, setOpen] = React.useState(false);
- const [values ,setValues]= React.useState("")
+  const [values, setValues] = React.useState("");
   const [users, setUsers] = useState([]);
   const StaffRequestContext = useContext(parentContext);
   const deptid = StaffRequestContext.deptid;
@@ -42,7 +42,7 @@ const StaffRequest = () => {
   };
 
   const handleClickOpen = (empid) => {
-    setTempId(empid)
+    setTempId(empid);
     setOpen(true);
   };
 
@@ -50,31 +50,25 @@ const StaffRequest = () => {
     setOpen(false);
   };
 
-
-const handleSubmit=()=>{
-   
-
-   const data={
-    newStatus: values,
-    empid:tempId
-   }
-   axios.put("http://localhost:3002/employees/status", data,{
-     headers: {
-        accessToken: sessionStorage.getItem("accessToken"),
-      }
-   }).then((res)=>{
-    console.log(res.data.success)
-   })
-console.log(data)
-
+  const handleSubmit = () => {
+    const data = {
+      newStatus: values,
+      empid: tempId,
+    };
+    axios
+      .put("http://localhost:3002/employees/status", data, {
+        headers: {
+          accessToken: sessionStorage.getItem("accessToken"),
+        },
+      })
+      .then((res) => {
+        console.log(res.data.success);
+      });
+    console.log(data);
 
     setOpen(false);
-      alert(values)
-
-
-}
-
-
+    alert(values);
+  };
 
   const status = [
     { id: 1, name: "Approved" },
@@ -134,15 +128,18 @@ console.log(data)
               <TableCell align="center">
                 <Button
                   sx={{ background: grey[100] }}
-                  onClick={()=>handleClickOpen(user.empid)}
+                  onClick={() => handleClickOpen(user.empid)}
                 >
                   change status
                 </Button>
                 <Dialog open={open} onClose={handleClose}>
                   <DialogTitle>Please Update Employee Status</DialogTitle>
                   <DialogContent>
-                    <Select 
-                      value={values} onChange={(e)=>{setValues(e.target.value)}}
+                    <Select
+                      value={values}
+                      onChange={(e) => {
+                        setValues(e.target.value);
+                      }}
                       sx={{
                         width: "100%",
                       }}

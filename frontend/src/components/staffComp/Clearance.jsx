@@ -49,13 +49,12 @@ const Clearance = () => {
       justifyContent={"center"}
       sx={{
         mt: "40px",
-        // ml: "450px",
       }}
     >
       <Stack
-        style={{ display: clearanceContext.present ? "block" : "none" }}
+       
       >
-        <div> wait to approved!</div>
+        <Stack  style={{ display:clearanceContext.wait|| !clearanceContext.present? "none" : "block" }}> wait to approved!</Stack>
       </Stack>
       <Button
         style={{ display: clearanceContext.present ? "none" : "block" }}
@@ -67,6 +66,8 @@ const Clearance = () => {
       >
         start your clearance by click here
       </Button>
+      
+      <Stack  style={{ display: clearanceContext.wait ? "block" : "none" }}>table</Stack>
       <div>
         <Dialog open={open} onClose={handleClose}>
           <DialogTitle>Please Fill The Form Below</DialogTitle>

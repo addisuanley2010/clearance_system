@@ -7,19 +7,40 @@ const { validateToken } = require("../middleware/AuthMiddleware");
 
 
 
-router.get('/', validateToken, (req, res) => {
+router.get('/', validateToken, async(req, res) => {
     const check = "SELECT * FROM `requests` WHERE `empid` =?";
+    const checkWait = "SELECT * FROM `status` WHERE `empid` =? AND `header_status`=?";
 
-    db.query(check, [req.user.username], (err, result) => {
+   await db.query(check, [req.user.username], (err, result) => {
         if (err) {
-            res.send(err)
+            res.send("err happend")
         }
         else if (result.length > 0) {
-            req.user.present = true
-            res.json(req.user)
+
+            db.query(checkWait, [req.user.username, "approved"], (err, result) => {
+                if (err) {
+                    res.send("wait error happened")
+                }
+                else if (result.length > 0) {
+                    req.user.wait = true
+                     req.user.present = true
+                    res.json(req.user)
+                }
+                else {
+                    req.user.present = true
+                    req.user.wait = false
+
+                    res.send(req.user)
+
+                }
+
+
+            })
+           
         }
         else {
             req.user.present = false
+            req.user.wait=false
             res.send(req.user)
 
         }
@@ -30,9 +51,36 @@ router.get('/', validateToken, (req, res) => {
 
 })
 
-router.post('/',  (req, res) => {
+// router.get('/wait', validateToken, (req, res) => {
+//     const checkWait = "SELECT * FROM `status` WHERE `empid` =? AND `header_status`=?";
+
+//     db.query(check, [req.user.username, "approved"], (err, result) => {
+//         if (err) {
+//             res.send(err)
+//         }
+//         else if (result.length > 0) {
+//             req.user.wait = true
+//             // req.user.present = true
+//             res.json(req.user)
+//         }
+//         else {
+//             // req.user.present = false
+//             req.user.wait = false
+
+//             res.send(req.user)
+
+//         }
+
+
+//     })
+
+
+// })
+
+
+router.post('/', (req, res) => {
     const { username, password } = req.body
-    const data =  ("SELECT * FROM `employee` WHERE `empid`=?")
+    const data = ("SELECT * FROM `employee` WHERE `empid`=?")
     db.query(data, [username], (err, result) => {
         if (err) {
             res.send({ error: "Failed!" })

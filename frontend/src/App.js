@@ -8,6 +8,7 @@ import { parentContext } from './state/ContextState';
 import Alert from './components/comp/Alert';
 import axios from 'axios';
 function App() {
+  const [wait, setWait] = useState(false)
   const [deptid, setDeptid] = useState("")
   const [present, setpresent] = useState(false)
   const [name,setName]=useState("");//temp value
@@ -47,6 +48,7 @@ function App() {
       setRoll(res.data.designation);
       setDeptid(res.data.deptid)
       setpresent(res.data.present)
+      setWait(res.data.wait)
 
     })
   })
@@ -54,6 +56,7 @@ function App() {
     <Stack>
       <parentContext.Provider value={{
         present:present,
+        wait:wait,
         name:name,
         roll:roll,
         deptid:deptid,
