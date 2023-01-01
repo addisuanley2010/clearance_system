@@ -7,7 +7,7 @@ router.post('/', async (req, res) => {
     const { empid, reason, date } = req.body
 
     const sqlInsert = await "INSERT INTO `requests`(`empid`, `date_of_request`, `reason_of_request`)  VALUES (?,?,?)"
-   const statusInsert = "INSERT INTO `status`(`empid`)  VALUES (?)"
+    const statusInsert = "INSERT INTO `status`(`empid`)  VALUES (?)"
 
     await db.query(sqlInsert, [empid, date, reason], (err, result) => {
         if (err) {

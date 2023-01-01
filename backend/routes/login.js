@@ -51,33 +51,6 @@ router.get('/', validateToken, async(req, res) => {
 
 })
 
-// router.get('/wait', validateToken, (req, res) => {
-//     const checkWait = "SELECT * FROM `status` WHERE `empid` =? AND `header_status`=?";
-
-//     db.query(check, [req.user.username, "approved"], (err, result) => {
-//         if (err) {
-//             res.send(err)
-//         }
-//         else if (result.length > 0) {
-//             req.user.wait = true
-//             // req.user.present = true
-//             res.json(req.user)
-//         }
-//         else {
-//             // req.user.present = false
-//             req.user.wait = false
-
-//             res.send(req.user)
-
-//         }
-
-
-//     })
-
-
-// })
-
-
 router.post('/', (req, res) => {
     const { username, password } = req.body
     const data = ("SELECT * FROM `employee` WHERE `empid`=?")
